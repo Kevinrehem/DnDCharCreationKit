@@ -54,11 +54,12 @@ public class MainMenu extends JFrame implements ActionListener {
         if(e.getSource() == this.exitButton){
             dispose();
         }else if(e.getSource() == this.newCharScreen){
-            if(this.charList.size()<13){
+            if(this.charList.size()<15){
                 System.out.println("OPENING CHARACTER CREATION SCREEN");
                 NewCharacter newCharacter = new NewCharacter(this.charList);
             }else{
-                JOptionPane.showMessageDialog(null, "Limite de personagens excedido!");
+                String charListFull = "Character limit exceeded!\nTo create a new character, delete an existing one";
+                JOptionPane.showMessageDialog(null, charListFull);
             }
         }else if (e.getSource() == this.charListScreen){
             System.out.println("OPENING CHARACTER LIST");

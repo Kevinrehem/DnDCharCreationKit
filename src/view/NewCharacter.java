@@ -1,11 +1,13 @@
 package view;
 
+import dbconnect.CharacterDAO;
 import model.Character;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -18,6 +20,7 @@ public class NewCharacter extends JFrame implements ActionListener{
     nature, religion, animalHandling, insight, medicine, perception, survival, deception, intimidation,
     performance, persuasion;
     private ArrayList<Character> charList;
+    CharacterDAO characterDAO;
 
 
     public NewCharacter(ArrayList<model.Character> charList){
@@ -34,6 +37,7 @@ public class NewCharacter extends JFrame implements ActionListener{
         this.wisLabel = new JLabel("WIS");
         this.charLabel = new JLabel("CHA");
         this.charList = charList;
+        this.characterDAO = new CharacterDAO();
 
         this.nameField = new JTextField();
         this.levelField = new JTextField();
@@ -173,6 +177,24 @@ public class NewCharacter extends JFrame implements ActionListener{
                 this.persuasion.isSelected()
             )
         );
+        try {
+            characterDAO.saveCharacter(new Character(
+                            this.nameField.getText(), this.archetypeField.getText(),
+                            Integer.parseInt(this.levelField.getText()),Integer.parseInt(this.strField.getText()),
+                            Integer.parseInt(this.dexField.getText()), Integer.parseInt(this.conField.getText()),
+                            Integer.parseInt(this.intField.getText()), Integer.parseInt(this.wisField.getText()),
+                            Integer.parseInt(this.charField.getText()),this.athletics.isSelected(),
+                            this.acrobatics.isSelected(), this.sleightOfHand.isSelected(), this.arcana.isSelected(),
+                            this.history.isSelected(), this.investigation.isSelected(), this.nature.isSelected(),
+                            this.religion.isSelected(), this.animalHandling.isSelected(), this.insight.isSelected(),
+                            this.medicine.isSelected(), this.perception.isSelected(), this.survival.isSelected(),
+                            this.deception.isSelected(), this.intimidation.isSelected(), this.performance.isSelected(),
+                            this.persuasion.isSelected()
+                    )
+            );
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void clearFields(){

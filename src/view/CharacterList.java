@@ -13,7 +13,7 @@ public class CharacterList extends JFrame implements ActionListener {
     private int countY;
 
     public CharacterList (ArrayList<model.Character> characters){
-        this.setSize(600,800);
+        this.setSize(600,700);
         this.characters = new ArrayList<JButton>();
         this.charList=characters;
         this.setLayout(null);

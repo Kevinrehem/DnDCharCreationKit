@@ -112,9 +112,9 @@ public class NewCharacter extends JFrame implements ActionListener{
         this.container.add(this.archetypeField);
 
         //ajustando posição e tamanho dos elementos
-        this.saveButton.setBounds(20, 700, 80, 30);
-        this.clearFieldsButton.setBounds(120, 700, 80, 30);
-        this.cancelButton.setBounds(450, 700, 120, 30);
+        this.saveButton.setBounds(20, 610, 80, 30);
+        this.clearFieldsButton.setBounds(120, 610, 80, 30);
+        this.cancelButton.setBounds(450, 610, 120, 30);
         this.nameLabel.setBounds(20,15,200,20);
         this.nameField.setBounds(20,35,400,30);
         this.levelLabel.setBounds(450,15,100,20);
@@ -155,7 +155,7 @@ public class NewCharacter extends JFrame implements ActionListener{
         this.saveButton.addActionListener(this::actionPerformed);
         this.clearFieldsButton.addActionListener(this::actionPerformed);
 
-        this.setSize(600,800);
+        this.setSize(600,700);
         this.setTitle("model.Character creation");
         this.setVisible(true);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -178,20 +178,7 @@ public class NewCharacter extends JFrame implements ActionListener{
             )
         );
         try {
-            characterDAO.saveCharacter(new Character(
-                            this.nameField.getText(), this.archetypeField.getText(),
-                            Integer.parseInt(this.levelField.getText()),Integer.parseInt(this.strField.getText()),
-                            Integer.parseInt(this.dexField.getText()), Integer.parseInt(this.conField.getText()),
-                            Integer.parseInt(this.intField.getText()), Integer.parseInt(this.wisField.getText()),
-                            Integer.parseInt(this.charField.getText()),this.athletics.isSelected(),
-                            this.acrobatics.isSelected(), this.sleightOfHand.isSelected(), this.arcana.isSelected(),
-                            this.history.isSelected(), this.investigation.isSelected(), this.nature.isSelected(),
-                            this.religion.isSelected(), this.animalHandling.isSelected(), this.insight.isSelected(),
-                            this.medicine.isSelected(), this.perception.isSelected(), this.survival.isSelected(),
-                            this.deception.isSelected(), this.intimidation.isSelected(), this.performance.isSelected(),
-                            this.persuasion.isSelected()
-                    )
-            );
+            new CharacterDAO().saveCharacter(MainMenu.charList.get(charList.size()-1));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

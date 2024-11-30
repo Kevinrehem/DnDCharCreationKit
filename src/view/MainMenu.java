@@ -1,5 +1,6 @@
 package view;
 
+import dbconnect.CharacterDAO;
 import model.Character;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 
 public class MainMenu extends JFrame implements ActionListener {
 
-    ArrayList<model.Character> charList;
+    public static ArrayList<model.Character> charList;
     private JButton newCharScreen;
     private JButton charListScreen;
     private JButton exitButton;
@@ -24,6 +25,7 @@ public class MainMenu extends JFrame implements ActionListener {
         this.exitButton = new JButton("EXIT");
         this.setLayout(new GridLayout());
         this.charList = new ArrayList<model.Character>();
+        new CharacterDAO().getAllCharacters(charList);
 
         this.screen.add(newCharScreen);
         this.screen.add(charListScreen);
@@ -52,8 +54,12 @@ public class MainMenu extends JFrame implements ActionListener {
         if(e.getSource() == this.exitButton){
             dispose();
         }else if(e.getSource() == this.newCharScreen){
-            System.out.println("OPENING CHARACTER CREATION SCREEN");
-            NewCharacter newCharacter = new NewCharacter(this.charList);
+            if(this.charList.size()<13){
+                System.out.println("OPENING CHARACTER CREATION SCREEN");
+                NewCharacter newCharacter = new NewCharacter(this.charList);
+            }else{
+                JOptionPane.showMessageDialog(null, "Limite de personagens excedido!");
+            }
         }else if (e.getSource() == this.charListScreen){
             System.out.println("OPENING CHARACTER LIST");
             new CharacterList(charList);

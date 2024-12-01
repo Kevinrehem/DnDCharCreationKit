@@ -105,13 +105,22 @@ public class CharacterList extends JFrame implements ActionListener {
             for (JButton it : this.characters) {
                 if (e.getSource() == it) {
                     // Remove o personagem do banco de dados e da lista lógica
-                    String charName = it.getText();
-                    deleteChar(charName);
-                    new CharacterDAO().deleteChar(charName);
+                    int choice = JOptionPane.showConfirmDialog(null ,
+                            "IRREVERSIBLE, ARE YOU SURE?"
+                    );
 
-                    // Remove o botão correspondente
-                    buttonToRemove = it;
-                    break;
+                    boolean userConfirmed = (choice == JOptionPane.YES_OPTION);
+
+                    if(userConfirmed){
+                        String charName = it.getText();
+                        deleteChar(charName);
+                        new CharacterDAO().deleteChar(charName);
+
+                        // Remove o botão correspondente
+                        buttonToRemove = it;
+                        break;
+                    }
+
                 }
             }
 

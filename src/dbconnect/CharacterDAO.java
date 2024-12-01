@@ -103,31 +103,25 @@ public class CharacterDAO {
         String sql="DELETE FROM `characters` WHERE name = ?";
 
         //verifica se o usuário deseja realmente excluir o personagem selecionado
-        int choice = JOptionPane.showConfirmDialog(null ,
-                "IRREVERSIBLE, ARE YOU SURE?"
-        );
 
-        boolean userConfirmed = (choice == JOptionPane.YES_OPTION);
+        try(Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            PreparedStatement statement = connection.prepareStatement(sql)){
 
-        if(userConfirmed){
-            try(Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-                PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1, name);
+            int rowsAffected = statement.executeUpdate();
 
-                statement.setString(1, name);
-                int rowsAffected = statement.executeUpdate();
-
-                if(rowsAffected>0){
-                    String output = "Character " + name + " deleted successfully!";
-                    JOptionPane.showMessageDialog(null, output);
-                }else{
-                    String output = "Character " + name + " not found!";
-                    JOptionPane.showMessageDialog(null, output);
-                }
-
-            }catch (SQLException e){
-
+            if(rowsAffected>0){
+                String output = "Character " + name + " deleted successfully!";
+                JOptionPane.showMessageDialog(null, output);
+            }else{
+                String output = "Character " + name + " not found!";
+                JOptionPane.showMessageDialog(null, output);
             }
+
+        }catch (SQLException e){
+
         }
+
 
 
     }
